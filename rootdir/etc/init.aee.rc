@@ -1,0 +1,18 @@
+on post-fs-data
+
+    symlink /mnt/vendor/vendor_aee_exp /data/vendor/aee_exp
+    mkdir /data/vendor/aee_exp 0775 root root
+    mkdir /data/vendor/dumpsys 0775 system system
+    mkdir /data/vendor/core 0775 system system
+    mkdir /data/vendor/tombstones 0775 system system
+
+on post-fs
+
+    # We restorecon /mnt/vendor/aee_exp in case the cache partition has been reset.
+    restorecon_recursive /mnt/vendor/vendor_aee_exp
+
+    chmod 0770 /mnt/vendor/vendor_aee_exp
+    chown root system /mnt/vendor/vendor_aee_exp
+
+    start aee_aedv
+    start aee_aedv64

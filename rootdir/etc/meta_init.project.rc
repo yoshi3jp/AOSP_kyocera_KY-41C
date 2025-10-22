@@ -1,0 +1,19 @@
+#INTERNAL_START
+on post-fs
+
+
+    chmod 0660 /dev/spm
+    chown system system /dev/spm
+
+on boot
+
+service spm_script /vendor/bin/spm_loader
+    user system
+    group system
+    oneshot
+
+service audioserver /system/bin/audioserver
+    class core
+    user audioserver
+    group audio camera drmrpc inet media mediadrm net_bt net_bt_admin net_bw_acct wakelock
+#INTERNAL_END
